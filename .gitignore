@@ -1,0 +1,5 @@
+node_modules/
+backend/resilinet.db
+backend/resilinet.db-shm
+backend/resilinet.db-wal
+npm-debug.log*

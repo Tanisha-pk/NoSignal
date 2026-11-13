@@ -1,0 +1,9 @@
+{
+  "name": "NoSignal Response Hub",
+  "short_name": "NoSignal",
+  "description": "Offline-first community response check-ins and emergency beacon logging.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8EE",
+  "theme_color": "#FFF8EE"
+}

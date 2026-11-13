@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FFF8EE">
+    <meta
+      name="description"
+      content="An offline-first community check-in and emergency response dashboard."
+    >
+    <title>NoSignal — Response Hub</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/translations.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="NoSignal home">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          <span class="brand-name">NoSignal<span class="brand-period">.</span></span>
+        </a>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a href="#emergency-actions" data-i18n="emergencyActions">Emergency actions</a>
+          <a href="#response-tools" data-i18n="responseTools">Response tools</a>
+          <a href="#activity-feed" data-i18n="systemActivity">System activity</a>
+          <a href="/responders" data-i18n="responders">Responders</a>
+        </nav>
+        <div class="header-tools">
+          <label class="language-picker">
+            <span class="visually-hidden" data-i18n="languageLabel">LANGUAGE</span>
+            <select id="language-select" aria-label="LANGUAGE" data-i18n-aria="languageLabel">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+              <option value="ta">தமிழ்</option>
+              <option value="te">తెలుగు</option>
+              <option value="bn">বাংলা</option>
+              <option value="kn">ಕನ್ನಡ</option>
+            </select>
+          </label>
+          <div class="network-status" id="network-status" role="status" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="network-label">CHECKING CONNECTION</span>
+          </div>
+        </div>
+      </header>
+
+      <main id="dashboard">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-content">
+            <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="communityNetwork">COMMUNITY RESPONSE NETWORK</span></p>
+            <h1 id="page-title"><span data-i18n="heroTitle">When it matters,</span><br><span data-i18n="heroHighlight">stay connected.</span></h1>
+            <p class="intro-copy" data-i18n="heroCopy">
+              Check in, prepare, and find local response information. Actions save on
+              this device first and sync when a connection is available.
+            </p>
+            <div class="hero-actions">
+              <a class="hero-link hero-link-primary" href="#emergency-actions">
+                <span data-i18n="emergencyActions">Emergency actions</span><span aria-hidden="true">↗</span>
+              </a>
+              <a class="hero-link hero-link-secondary" href="#response-tools">
+                <span data-i18n="responseTools">Response tools</span><span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </div>
+          <figure class="community-visual">
+            <div class="visual-topline">
+              <span class="visual-kicker" data-i18n="communityNetwork">COMMUNITY RESPONSE NETWORK</span>
+              <span class="visual-ready"><span class="status-dot" aria-hidden="true"></span><span data-i18n="offlineReady">OFFLINE-READY</span></span>
+            </div>
+            <svg class="network-map" viewBox="0 0 520 300" aria-hidden="true">
+              <path class="map-contour" d="M-20 69C61 32 90 81 163 66s105-40 172-10 110 35 205-8"/>
+              <path class="map-contour" d="M-20 91c72-34 119 23 190 6s102-37 163-11 110 35 207 0"/>
+              <path class="map-contour" d="M-18 222c63-36 116 22 185 4s111-46 172-14 120 31 208-4"/>
+              <path class="map-contour" d="M-20 247c69-37 118 18 190 4s110-39 170-12 119 34 206-1"/>
+              <path class="map-road" d="M77 179c51-65 115-62 170-87s100 21 191 93"/>
+              <path class="map-route" d="M105 196c56-30 83-70 147-87s105 28 158 76"/>
+              <path class="map-route-secondary" d="M112 198c65 44 117 44 179 8s77-23 119-21"/>
+              <path class="map-route-tertiary" d="M252 109c10 48 20 69 39 97"/>
+              <circle class="map-node-halo" cx="105" cy="196" r="20"/>
+              <circle class="map-node map-node-teal" cx="105" cy="196" r="7"/>
+              <circle class="map-node-halo" cx="252" cy="109" r="20"/>
+              <circle class="map-node map-node-amber" cx="252" cy="109" r="7"/>
+              <circle class="map-node-halo" cx="291" cy="206" r="20"/>
+              <circle class="map-node map-node-blue" cx="291" cy="206" r="7"/>
+              <circle class="map-node-halo" cx="410" cy="177" r="20"/>
+              <circle class="map-node map-node-coral" cx="410" cy="177" r="7"/>
+              <path class="map-building" d="M63 150h23v18H63zM73 144v6m148-77h25v18h-25zm137 88h28v18h-28z"/>
+            </svg>
+            <figcaption data-i18n="illustrativeNetwork">Illustrative community network, not live incident data</figcaption>
+          </figure>
+        </section>
+
+        <section class="action-grid" id="emergency-actions" aria-labelledby="emergency-heading">
+          <header class="action-header">
+            <h2 id="emergency-heading" data-i18n="emergencyActions">Emergency actions</h2>
+          </header>
+          <article class="action-card safe-card">
+            <div class="card-topline">
+              <span class="action-index" data-i18n="checkinIndex">01 / CHECK-IN</span>
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+              </span>
+            </div>
+            <div>
+              <h2 data-i18n="safeTitle">You're accounted for.</h2>
+              <p data-i18n="safeCopy">Let your response network know you are safe.</p>
+            </div>
+            <button class="action-button safe-button" id="checkin-button" type="button">
+              <span data-i18n="safeButton">I AM SAFE</span>
+            </button>
+          </article>
+
+          <article class="action-card sos-card">
+            <div class="card-topline">
+              <span class="action-index" data-i18n="sosIndex">02 / EMERGENCY</span>
+              <span class="action-icon sos-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg>
+              </span>
+            </div>
+            <div>
+              <h2 data-i18n="sosTitle">Need urgent help?</h2>
+              <p data-i18n="sosCopy">Record your location and battery with an SOS beacon.</p>
+            </div>
+            <button class="action-button sos-button" id="sos-button" type="button">
+              <span data-i18n="sosButton">TRIGGER SOS BEACON</span>
+            </button>
+          </article>
+        </section>
+
+        <p class="prototype-note">
+          <span aria-hidden="true">i</span>
+          <span data-i18n="prototypeNote">Prototype only: beacons are logged in this app; emergency services and contacts are not notified.</span>
+        </p>
+
+        <section class="module-grid" id="response-tools" aria-label="Response tools" data-i18n-aria="responseTools">
+          <article class="module-card shelter-card" aria-labelledby="shelters-title">
+            <div class="module-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="shelterEyebrow">VERIFY BEFORE TRAVEL</span></p>
+                <h2 id="shelters-title" data-i18n="sheltersTitle">Safe Shelters Directory</h2>
+              </div>
+            </div>
+            <p class="micro-note map-note" data-i18n="mapNote">Select a shelter to preview its location. Google Maps requires an internet connection.</p>
+            <button class="small-button outline-button" id="use-location-button" type="button" data-i18n="useMyLocation">USE MY LOCATION</button>
+            <div class="map-frame-wrap" id="shelter-map-wrap" hidden>
+              <iframe
+                id="shelter-map"
+                title="Google Maps shelter location"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="map-empty" id="shelter-map-empty" role="status">
+              <span class="map-empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </span>
+              <span class="map-empty-copy" data-i18n="sheltersCopy">Shelter details are supplied by the local response network.</span>
+            </div>
+            <p class="map-selection" id="map-selection" aria-live="polite"></p>
+            <ul class="item-list shelter-list" id="shelter-list" aria-live="polite">
+              <li class="list-empty">Loading shelter directory…</li>
+            </ul>
+            <p class="micro-note shelter-disclaimer" data-i18n="shelterDisclaimer">Confirm availability and routes with local authorities. Empty listings are not an indication that no shelters exist.</p>
+          </article>
+
+          <article class="module-card contact-card" aria-labelledby="contacts-title">
+            <div class="module-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="contactEyebrow">LOCAL EMERGENCY CONTACTS</span></p>
+                <h2 id="contacts-title" data-i18n="contactsTitle">Emergency Contact Vault</h2>
+              </div>
+            </div>
+            <p class="module-copy" data-i18n="contactsCopy">Keep trusted ICE contacts available on this device.</p>
+            <form class="stack-form" id="contact-form">
+              <label>
+                <span data-i18n="contactName">CONTACT NAME</span>
+                <input id="contact-name" name="name" autocomplete="name" maxlength="100" required>
+              </label>
+              <label>
+                <span data-i18n="phoneNumber">PHONE NUMBER</span>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  maxlength="40"
+                  required
+                >
+              </label>
+              <label>
+                <span data-i18n="relationship">RELATIONSHIP</span>
+                <input
+                  id="contact-relationship"
+                  name="relationship"
+                  placeholder="e.g. Family, neighbour"
+                  data-i18n-placeholder="relationshipPlaceholder"
+                  maxlength="80"
+                  required
+                >
+              </label>
+              <button class="small-button safe-button" type="submit"><span data-i18n="saveContact">SAVE CONTACT</span><span aria-hidden="true">+</span></button>
+            </form>
+            <ul class="item-list contact-list" id="contact-list" aria-live="polite">
+              <li class="list-empty">Loading saved contacts…</li>
+            </ul>
+            <section class="medical-card" aria-labelledby="medical-card-title">
+              <h3 id="medical-card-title" data-i18n="medicalCardTitle">Offline Medical &amp; ID QR Card</h3>
+              <form class="stack-form" id="medical-card-form">
+                <label><span data-i18n="yourName">YOUR NAME</span><input id="medical-name" name="name" maxlength="60" required></label>
+                <label><span data-i18n="bloodType">BLOOD TYPE</span><input id="medical-blood" name="bloodType" maxlength="10" placeholder="O+"></label>
+                <label><span data-i18n="allergies">ALLERGIES</span><input id="medical-allergies" name="allergies" maxlength="80"></label>
+                <label><span data-i18n="emergencyContact">EMERGENCY CONTACT</span><input id="medical-emergency-contact" name="emergencyContact" maxlength="80" required></label>
+                <button class="small-button safe-button" type="submit" data-i18n="saveMedicalCard">SAVE &amp; GENERATE QR</button>
+              </form>
+              <canvas id="medical-qr" width="264" height="264" hidden></canvas>
+              <p class="micro-note" id="medical-qr-error" role="status" data-i18n="medicalCardIncomplete">Enter your name and emergency contact, then save to create your offline QR card.</p>
+            </section>
+          </article>
+
+          <article class="module-card guide-card" aria-labelledby="guides-title">
+            <div class="module-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="offlineCached">CACHED FOR OFFLINE USE</span></p>
+                <h2 id="guides-title" data-i18n="guidesTitle">Offline Survival Index</h2>
+              </div>
+            </div>
+            <label class="search-field">
+              <span class="visually-hidden" data-i18n="searchGuides">Search guides</span>
+              <input id="guide-search" type="search" placeholder="Search first aid &amp; survival…" data-i18n-placeholder="searchPlaceholder">
+              <span class="search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 4 4"/></svg>
+              </span>
+            </label>
+            <ul class="item-list guide-list" id="guide-list" aria-live="polite">
+              <li class="list-empty">Loading offline guides…</li>
+            </ul>
+            <p class="micro-note" data-i18n="guideDisclaimer">General information only. Follow emergency dispatchers and local authorities.</p>
+          </article>
+
+          <article class="module-card strobe-card" aria-labelledby="strobe-title">
+            <div class="module-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="visualSignal">VISUAL SIGNAL</span></p>
+                <h2 id="strobe-title" data-i18n="strobeTitle">SOS Morse Signal and Torch</h2>
+              </div>
+            </div>
+            <div class="strobe-display" id="strobe-display" role="img" aria-label="Strobe simulator idle">
+              <span class="strobe-light" aria-hidden="true"></span>
+              <span class="strobe-code" id="strobe-code">··· &nbsp;−−− &nbsp;···</span>
+              <span class="strobe-label" id="strobe-label" data-i18n="strobeIdle">SIMULATOR IDLE</span>
+            </div>
+            <button class="small-button outline-button" id="strobe-button" type="button">
+              <span data-i18n="playPulse">PLAY SOS PULSE</span>
+            </button>
+            <button class="small-button outline-button" id="whistle-button" type="button" data-i18n="startWhistle">START 3000 HZ WHISTLE</button>
+            <p class="micro-note" data-i18n="strobeDisclaimer">SOS flashes on screen; camera torch and whistle need device support. Flashing may affect photosensitive users.</p>
+          </article>
+
+          <article class="module-card timer-card" data-state="idle" aria-labelledby="timer-title">
+            <div class="module-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="timerEyebrow">CHECK-IN REMINDER</span></p>
+                <h2 id="timer-title" data-i18n="timerTitle">Safety Countdown</h2>
+              </div>
+            </div>
+            <p class="module-copy" data-i18n="timerCopy">Acknowledge before time runs out or this hub will record an SOS beacon.</p>
+            <form class="timer-form" id="timer-form">
+              <label for="timer-duration" data-i18n="countdownLabel">COUNTDOWN</label>
+              <div class="timer-controls">
+                <input id="timer-duration" type="number" min="10" max="86400" step="10" value="300" required>
+                <span data-i18n="seconds">SECONDS</span>
+                <button class="small-button safe-button" type="submit" id="timer-start-button" data-i18n="start">START</button>
+              </div>
+            </form>
+            <div class="timer-readout">
+              <output id="timer-countdown" aria-label="Time remaining" aria-live="off" data-i18n-aria="timeRemaining">05:00</output>
+              <span id="timer-status">NO ACTIVE COUNTDOWN</span>
+            </div>
+            <div class="timer-progress" id="timer-progress" role="progressbar" aria-label="Time remaining" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" data-i18n-aria="timeRemaining">
+              <span id="timer-progress-fill"></span>
+            </div>
+            <button class="small-button sos-button timer-ack-button" id="timer-ack-button" type="button" disabled>
+              <span data-i18n="acknowledge">I'M OK — ACKNOWLEDGE</span>
+            </button>
+            <p class="micro-note" data-i18n="timerDisclaimer">Keep this page open. Background timers may be paused by the browser. No one else is contacted.</p>
+          </article>
+
+        </section>
+
+        <section class="log-panel" id="activity-feed" aria-labelledby="log-title">
+          <div class="log-heading">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="liveFeed">LIVE FEED</span></p>
+              <h2 id="log-title" data-i18n="systemActivity">System activity</h2>
+            </div>
+            <span class="log-indicator"><span class="status-dot" aria-hidden="true"></span> <span data-i18n="localLog">LOCAL LOG</span></span>
+          </div>
+          <ol class="log-list" id="system-log" aria-live="polite" aria-relevant="additions">
+            <li class="log-empty">Initializing response hub…</li>
+          </ol>
+        </section>
+      </main>
+
+      <main id="responders-view" class="responders-view" hidden>
+        <section class="log-panel" aria-labelledby="responders-title">
+          <div class="log-heading">
+            <div>
+              <a class="small-button outline-button responder-back-link" href="/" data-i18n="backToHub">← Back to Main Hub</a>
+              <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="liveFeed">LIVE FEED</span></p>
+              <h1 id="responders-title" data-i18n="triageTitle">Responder triage</h1>
+            </div>
+            <span class="log-indicator"><span class="status-dot" aria-hidden="true"></span> <span data-i18n="liveTriage">LIVE TRIAGE</span></span>
+          </div>
+          <div class="triage-table-wrap">
+            <table class="triage-table">
+              <thead><tr>
+                <th scope="col" data-i18n="triageType">TYPE</th>
+                <th scope="col" data-i18n="triageDetails">DETAILS</th>
+                <th scope="col" data-i18n="triageBattery">BATTERY</th>
+                <th scope="col" data-i18n="triageTime">TIME</th>
+                <th scope="col" data-i18n="triageAction">ACTION</th>
+              </tr></thead>
+              <tbody id="triage-rows"><tr><td colspan="5" data-i18n="loadingTriage">Loading triage…</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span data-i18n="footerBrand">NoSignal RESPONSE HUB</span>
+        <span data-i18n="offlineReady">OFFLINE-READY</span>
+      </footer>
+    </div>
+  </body>
+</html>
